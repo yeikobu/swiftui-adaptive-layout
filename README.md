@@ -18,7 +18,7 @@ With the skill installed, your agent will:
 | You use | Quickest way |
 | :- | :- |
 | Claude Code | [Install as a plugin](#claude-code) |
-| Claude desktop app or claude.ai | [Upload the skill as a ZIP](#claude-desktop-app-and-claudeai) |
+| Claude desktop app or claude.ai | [Download the ZIP and upload it](#claude-desktop-app-and-claudeai) |
 | Codex | [Ask Codex to install it](#codex) |
 | Several agents at once | [Use the `skills` CLI](#any-agent-with-the-skills-cli) |
 
@@ -65,22 +65,28 @@ If `~/.claude/skills/` didn't exist before, run `/reload-skills` or start a new 
 
 ### Claude desktop app and claude.ai
 
-Custom skills are uploaded as a ZIP file that contains the skill folder.
-
-1. Build the ZIP:
-
-   ```bash
-   git clone https://github.com/yeikobu/swiftui-adaptive-layout.git
-   cd swiftui-adaptive-layout/skills
-   zip -r swiftui-adaptive-layout.zip swiftui-adaptive-layout
-   ```
-
+1. Download [`swiftui-adaptive-layout.zip`](https://github.com/yeikobu/swiftui-adaptive-layout/releases/latest/download/swiftui-adaptive-layout.zip) from the latest release.
 2. In Claude, open **Customize > Skills**, click **+**, choose **Create skill**, and then **Upload a skill**.
-3. Select `swiftui-adaptive-layout.zip` and make sure the skill is toggled on.
+3. Select the ZIP, without unpacking it, and make sure the skill is toggled on.
 
 Skills need code execution to be enabled. On individual plans, turn it on in **Settings > Capabilities**. On Team and Enterprise plans, an owner enables it for the organization.
 
-Don't use GitHub's **Download ZIP** button for this: that archive contains the whole repository, not the skill folder, and the upload is rejected.
+Don't use GitHub's green **Code > Download ZIP** button for this. That archive contains the whole repository, and the upload is rejected because `SKILL.md` has to be in the ZIP's top-level folder.
+
+<details>
+<summary>Build the ZIP yourself</summary>
+
+Compress the inner skill folder, not the repository and not `skills/`:
+
+```bash
+git clone https://github.com/yeikobu/swiftui-adaptive-layout.git
+cd swiftui-adaptive-layout/skills
+zip -r swiftui-adaptive-layout.zip swiftui-adaptive-layout
+```
+
+The ZIP must contain `swiftui-adaptive-layout/SKILL.md` and `swiftui-adaptive-layout/references/`.
+
+</details>
 
 ### Codex
 
@@ -146,6 +152,8 @@ You can also call it by name:
 ```text
 .claude-plugin/
 └── marketplace.json        # lets Claude Code install the repo as a plugin
+.github/workflows/
+└── release.yml             # attaches the skill ZIP to each published release
 skills/
 └── swiftui-adaptive-layout/
     ├── SKILL.md            # workflow and constraints, always loaded with the skill

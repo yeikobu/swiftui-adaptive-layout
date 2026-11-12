@@ -128,7 +128,7 @@ Converting a single-column app often turns its home screen into the sidebar: the
 ## Toolbars and presentations
 
 - Put actions in system toolbars with semantic placements (`.primaryAction`, `.confirmationAction`, `.cancellationAction`). The system then moves them to the right place for the window's width and, on iPhone Duo, into a vertical bar. Hand-built bars can't adapt. See [iphone-duo.md](iphone-duo.md#vertical-bars).
-- Give every toolbar action both a title and an icon, because different presentations show different parts. This has a cost: a horizontal bar then shows the icon and drops the title. See [the trade-off](iphone-duo.md#the-cost-of-adding-an-icon) before converting text buttons.
+- Give a toolbar action both a title and an icon when it should adapt to every presentation, because each one shows a different part. This has a cost: a horizontal bar then shows the icon and drops the title, and a text-only button stays visible on iPhone Duo anyway. See [the trade-off](iphone-duo.md#the-cost-of-adding-an-icon) before converting text buttons.
 - Sheets on a large window can be dismissed by tapping outside them, which is far easier to do by accident than a swipe on a phone. Add `interactiveDismissDisabled` while a form holds unsaved input.
 - Check what falls into overflow at the narrowest width. The most frequent action should not be the first to go.
 - Sheets on a large window: set `presentationDetents` or `presentationSizing(.form)` / `.page` so a short form isn't a full-height sheet on a 13-inch iPad.

@@ -36,7 +36,7 @@ Rate by what the person using the app experiences, and weigh it against who that
 | Severity | Meaning | Examples |
 | :- | :- | :- |
 | **Blocker** | Content or an action is unreachable, or work is lost | A control under the camera or in the fold, a column with no way back, a draft discarded on resize, a clipped form with no scrolling |
-| **Major** | The layout is clearly wrong but everything still works | A phone layout stretched across an iPad, text lines spanning the full width, a toolbar action missing in a vertical bar because it has no icon, a primary action that vanishes when the sidebar is hidden |
+| **Major** | The layout is clearly wrong but everything still works | A phone layout stretched across an iPad, text lines spanning the full width, a text label replaced by a bare icon in an app whose audience relies on reading it, a primary action that vanishes when the sidebar is hidden |
 | **Minor** | Polish | Uneven margins at one size, a sheet taller than its content, a missing hover effect |
 
 Don't inflate. A fixed 44-point icon frame is not a finding. A deprecated API that still adapts correctly is a note, not a major issue.

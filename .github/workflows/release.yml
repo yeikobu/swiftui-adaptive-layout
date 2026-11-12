@@ -1,0 +1,30 @@
+name: Attach skill ZIP to release
+
+# When a release is published, package the skill folder the way the Claude apps
+# expect it (SKILL.md in the top-level folder) and attach it to the release.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Build the ZIP
+        run: |
+          cd skills
+          zip -r ../swiftui-adaptive-layout.zip swiftui-adaptive-layout -x '*.DS_Store'
+          unzip -l ../swiftui-adaptive-layout.zip
+
+      - name: Attach it to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" swiftui-adaptive-layout.zip --clobber

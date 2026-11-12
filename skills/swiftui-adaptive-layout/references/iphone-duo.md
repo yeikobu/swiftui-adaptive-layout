@@ -89,11 +89,11 @@ Presentation varies by container:
 
 An item can end up in a vertical bar, a horizontal bar, or the overflow menu, and each uses a different part of its label:
 
-- Vertical bar: icon only. **An item with a title and no icon is never shown vertically, and neither is an item built from a custom view.**
+- Vertical bar: icon only. **An item with a title and no icon is never shown vertically, and neither is an item built from a custom view.** Such an item isn't dropped; see [what happens to it](#the-cost-of-adding-an-icon).
 - Horizontal bar: icon or title, preferring the icon.
 - Overflow menu: icon and title.
 
-So use `Label` (or `Button(_:systemImage:action:)`) for every action that should adapt:
+So use `Label` (or `Button(_:systemImage:action:)`) for every action that should move into the vertical bar:
 
 ```swift
 .toolbar {
@@ -120,14 +120,16 @@ So use `Label` (or `Button(_:systemImage:action:)`) for every action that should
 
 #### The cost of adding an icon
 
-Adding an icon to a text button changes how it looks everywhere, not only on iPhone Duo. Because a horizontal bar prefers the icon, a button that read "Cancel" becomes a bare ✕ on every iPhone and iPad once it has one.
+Adding an icon to a text button changes how it looks everywhere, not only on iPhone Duo. Because a horizontal bar prefers the icon, a button that read "Cancel" becomes a bare ✕ on every iPhone and iPad once it has one. `.labelStyle(.titleAndIcon)` doesn't bring the text back: a toolbar still shows the icon alone.
 
-That's fine for conventional actions in most apps. It's a regression where the text was doing real work: apps for older or less technical people, unfamiliar actions, or a project whose own guidelines require visible labels. Before converting:
+And the icon often isn't needed to keep the button reachable. Observed in the iPhone Duo simulator (iOS 27.1 SDK, detail column of a split view on the inner display): **a title-only item stays visible in a horizontal bar at the top, with its text, while the items that have icons move into the vertical bar.** It doesn't disappear and it doesn't go to overflow. Other contexts, such as sheets on the outer display, weren't checked; verify the one you care about.
 
-- Check the project's guidelines and audience. If they call for visible text, raise the trade-off with the person instead of converting silently.
-- Convert only the items that can actually land in a vertical bar. Per the table above, a centered or leading sheet on the inner display keeps horizontal bars; sheets on the outer display and the detail column of a split view don't.
-- Confirm in the simulator that the item really disappears without an icon in the pose that matters. Don't make the change on the strength of the rule alone.
-- Where the label must stay, keep the action out of the bar: a labeled button in the content, or `toolbarVerticalBehavior(.disabled)` on a screen that suits horizontal bars.
+So a missing icon costs some consistency (one item sits apart from the vertical bar), while an added icon costs the label on every device. Which matters more depends on the app:
+
+- **Keep text-only buttons** where the text does real work: apps for older or less technical people, unfamiliar actions, or a project whose guidelines require visible labels. Cancel, Close, and Done in a sheet are the usual cases.
+- **Add icons** to actions with a well-known symbol (share, add, delete, more) and wherever a tidy vertical bar matters more than a visible word.
+- When unsure, raise the trade-off with the person instead of converting every button silently.
+- Check the result in the simulator in the pose that matters. This takes a minute, and the behavior is easy to get wrong from the rule alone.
 
 Ordering and placement:
 
