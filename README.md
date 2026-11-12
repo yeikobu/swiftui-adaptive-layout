@@ -4,12 +4,14 @@ An agent skill for adapting SwiftUI apps to iPad, resizable iPhone windows, and 
 
 With the skill installed, your agent will:
 
+- Audit the project for screen-based sizing, device and orientation checks, and hardcoded dimensions.
 - Design for the space each container actually has, not for a device name or orientation.
 - Assess navigation, including when a sidebar or list-detail layout helps and when it doesn't.
-- Handle resizable windows, multitasking, folding poses, and asymmetric safe areas.
+- Handle resizable windows, multitasking, and iPhone Duo's fold, cameras, and vertical bars, using `ArrangementView` and reserved regions with availability fallbacks.
 - Preserve selection, navigation, and in-progress work as layouts collapse and expand.
 - Check Dynamic Type, VoiceOver, right-to-left layout, and keyboard behavior.
 - Validate the affected flows across iPad sizes, resizable windows, and iPhone Duo poses.
+- In a review, report findings by severity with the file, the configuration that breaks, and the fix.
 
 ## Install
 
@@ -146,7 +148,12 @@ You can also call it by name:
 └── marketplace.json        # lets Claude Code install the repo as a plugin
 skills/
 └── swiftui-adaptive-layout/
-    └── SKILL.md            # the skill itself
+    ├── SKILL.md            # workflow and constraints, always loaded with the skill
+    └── references/         # loaded only when the task needs them
+        ├── audit.md        # search patterns and before-and-after fixes
+        ├── navigation.md   # sidebar, split view, and tab decisions; preserving state
+        ├── iphone-duo.md   # vertical bars, ArrangementView, reserved regions, testing
+        └── review.md       # review process, severity scale, report format
 ```
 
 The skill references current Apple documentation. Check API availability and test against the target app's supported platforms and SDKs.
