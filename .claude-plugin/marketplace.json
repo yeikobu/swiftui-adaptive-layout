@@ -1,0 +1,18 @@
+{
+  "name": "yeikobu",
+  "description": "Agent skills by yeikobu for building SwiftUI apps",
+  "owner": {
+    "name": "yeikobu",
+    "url": "https://github.com/yeikobu"
+  },
+  "plugins": [
+    {
+      "name": "swiftui-adaptive-layout",
+      "source": "./",
+      "description": "Adapt, implement, or review SwiftUI layouts for iPad, resizable iPhone windows, and iPhone Duo, following Apple's Human Interface Guidelines.",
+      "homepage": "https://github.com/yeikobu/swiftui-adaptive-layout",
+      "repository": "https://github.com/yeikobu/swiftui-adaptive-layout",
+      "keywords": ["swiftui", "ipad", "iphone", "adaptive-layout", "hig"]
+    }
+  ]
+}
